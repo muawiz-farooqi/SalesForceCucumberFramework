@@ -1,0 +1,5 @@
+com\training\pages\LoginPage.class
+com\training\runner\Runner.class
+com\training\steps\Steps.class
+com\training\pages\CalculatorPage.class
+com\training\pages\HomePage.class
