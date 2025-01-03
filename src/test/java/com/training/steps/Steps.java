@@ -1,5 +1,6 @@
 package com.training.steps;
 
+import org.junit.Assert;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -120,6 +121,24 @@ public class Steps extends BaseTest {
 	@When("User crops photo to size {string}")
 	public void user_crops_photo_to_size(String option) {
 		page.cropPhoto(option);
+	}
+	
+	@Then("Check If File Downloaded {string}")
+	public void check_if_file_downloaded(String fileName) {
+	    Assert.assertTrue(page.isFileDownloaded(fileName));
+	}
+	@When("User selects {string} option from {string} dropdown")
+	public void user_selects_option_from_dropdown(String option, String elementName) {
+	    page.selectFromDropdown(option, elementName);
+	}
+	@Then("Is Tab Added {string}")
+	public void is_tab_added(String tabName) {
+		Assert.assertTrue(page.isTabAdded(tabName, driver));
+	}
+	
+	@Then("Does Window Header Match {string}")
+	public void does_window_header_match(String headerText) {
+		Assert.assertEquals(page.matchWindowHeader(driver), headerText);
 	}
 
 	@After

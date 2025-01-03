@@ -1,13 +1,16 @@
 package com.training.base;
 
+import java.io.File;
 import java.util.HashMap;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BasePage {
@@ -36,6 +39,11 @@ public class BasePage {
 	public void waitForLocator(By by) {
 		WebDriverWait wait = new WebDriverWait(driver, 7);
 		wait.until(ExpectedConditions.presenceOfElementLocated(by));
+	}
+	
+	public void waitForWindows(int windows) {
+		WebDriverWait wait = new WebDriverWait(driver, 7);
+        wait.until(ExpectedConditions.numberOfWindowsToBe(windows));
 	}
 
 	public void enterIntoTextbox(String elementName, String value) {
@@ -120,7 +128,7 @@ public class BasePage {
 			WebElement SEHandle = getElement("SEHandle");
 			WebElement NWHandle = getElement("NWHandle");
 			WebElement SWHandle = getElement("SWHandle");
-			
+
 			waitForElement(NEHandle);
 			actions.dragAndDropBy(NEHandle, 20, 20).build().perform();
 			waitForElement(SEHandle);
@@ -135,6 +143,76 @@ public class BasePage {
 	public void doesElementTextContain(String elementName, String text) {
 		WebElement element = getElement(elementName);
 		Assert.assertTrue(element.getText().contains(text));
+	}
+
+	public boolean isFileDownloaded(String expectedFileName) {
+		File downloadFolder = new File("C:\\Users\\muawi\\Downloads");
+
+		int timeoutSeconds = 30;
+		int waited = 0;
+
+		while (waited < timeoutSeconds) {
+			File[] files = downloadFolder.listFiles((dir, name) -> name.contains(expectedFileName));
+			if (files != null && files.length > 0) {
+				return true;
+			}
+			try {
+				Thread.sleep(1000);
+				waited++;
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+		return false;
+	}
+
+	public void selectFromDropdown(String option, String elementName) {
+		WebElement element = getElement(elementName);
+		new Select(element).selectByVisibleText(option);
+	}
+
+	public boolean isTabAdded(String tabName, WebDriver driver) {
+		WebElement menuButton = getElement("Menu");
+		String original_tab = menuButton.getText();
+		if (!original_tab.equalsIgnoreCase("Salesforce Chatter")) {
+			menuButton.click();
+			getElement("Salesforce Chatter").click();
+		}
+
+		this.driver = driver;
+		boolean output;
+
+		try {
+			waitForElement(getElement(tabName));
+			output = true;
+		} catch (TimeoutException e) {
+			output = false;
+		}
+
+		menuButton.click();
+		getElement("Sales").click();
+
+		return output;
+	}
+
+	public String matchWindowHeader(WebDriver driver) {
+		this.driver = driver;
+		
+		String parentHandle = driver.getWindowHandle();
+		
+		waitForWindows(2);
+		
+		for (String handle : driver.getWindowHandles())
+		{
+			driver.switchTo().window(handle);
+		}
+		
+		String headerText = getElement("WindowDivHeader").getText();
+		
+		driver.close();
+		driver.switchTo().window(parentHandle);
+		
+		return headerText;
 	}
 
 }
