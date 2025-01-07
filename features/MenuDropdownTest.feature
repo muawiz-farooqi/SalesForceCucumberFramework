@@ -6,55 +6,56 @@ Then User enter into textbox "Username" "muawiz@developer.com"
 And User enter into textbox "Password" "Farooqi$123"
 And User click on Button "Login"
 
-#Scenario: 5 - Select user menu dropdown
-#Given User is on "HomePage"
-#When User click on Button "UserNavMenu"
-#Then Does Element Text Match "UserNavDropDownList" "My Profile"
+@testcase5
+Scenario: 5 - Select user menu dropdown
+Given User is on "HomePage"
+When User click on Button "UserNavMenu"
+Then Does Element Text Match "UserNavDropDownList" "My Profile"
 
+@testcase6
+Scenario: 6 - Edit Profile
+Given User is on "HomePage"
+When User click on Button "UserNavMenu"
+And User click on Button "My Profile"
+Then User is on "ProfilePage"
 
-#Scenario: 6 - Edit Profile
-#Given User is on "HomePage"
-#When User click on Button "UserNavMenu"
-#And User click on Button "My Profile"
-#Then User is on "ProfilePage"
-#
-#When User click on Button "EditProfile"
-#And Change frame to "AboutFrame"
-#And User click on Button "About"
-#And User clears textbox "LastName"
-#And User enter into textbox "LastName" "Farooqixyz"
-#And User click on Button "SaveAll"
-#And Return to Default Frame
-#Then Does Element Text Contain "ProfileName" "Farooqixyz"
-#
-#When User click on Button "PostLink"
-#And Change frame to "PostFrame"
-#And User enter into textbox "PostText" "Hello from Cucumber!"
-#And Return to Default Frame
-#And User click on Button "Share"
-#And Page updates after 1 second
-#Then Does Element Text Match "LatestPost" "Hello from Cucumber!"
-#
-#When User click on Button "FileLink"
-#And User click on Button "ComputerUpload"
-#And User send path "ChooseFile" "C:\\UTA\\Docs\\Resume_8_7_.pdf"
-#And User click on Button "Share"
-#And User waits for "FileOverlay" to disappear 
-#And Page updates after 1 second
-#Then Does Element Text Match "LatestFile" "Resume_8_7_"
-#
-#When User hovers mouse over "ProfilePhoto"
-#And User click on Button "AddPhoto"
-#And Change frame to "AddPhotoFrame"
-#And User send path "ChoosePhoto" "C:\\Users\\muawi\\OneDrive\\Pictures\\portrait\\SEIR (square).JPG"
-#And User click on Button "UploadButton"
-#And User crops photo to size "Full"
-#And User click on Button "SaveProfilePic"
-#And Return to Default Frame
-#Then User hovers mouse over "ProfilePhoto"
-#And User is on "DeletePhoto"
+When User click on Button "EditProfile"
+And Change frame to "AboutFrame"
+And User click on Button "About"
+And User clears textbox "LastName"
+And User enter into textbox "LastName" "Farooqixyz"
+And User click on Button "SaveAll"
+And Return to Default Frame
+Then Does Element Text Contain "ProfileName" "Farooqixyz"
 
+When User click on Button "PostLink"
+And Change frame to "PostFrame"
+And User enter into textbox "PostText" "Hello from Cucumber!"
+And Return to Default Frame
+And User click on Button "Share"
+And Page updates after 1 second
+Then Does Element Text Match "LatestPost" "Hello from Cucumber!"
 
+When User click on Button "FileLink"
+And User click on Button "ComputerUpload"
+And User send path "ChooseFile" "C:\\UTA\\Docs\\Resume_8_7_.pdf"
+And User click on Button "Share"
+And User waits for "FileOverlay" to disappear 
+And Page updates after 1 second
+Then Does Element Text Match "LatestFile" "Resume_8_7_"
+
+When User hovers mouse over "ProfilePhoto"
+And User click on Button "AddPhoto"
+And Change frame to "AddPhotoFrame"
+And User send path "ChoosePhoto" "C:\\Users\\muawi\\OneDrive\\Pictures\\portrait\\SEIR (square).JPG"
+And User click on Button "UploadButton"
+And User crops photo to size "Full"
+And User click on Button "SaveProfilePic"
+And Return to Default Frame
+Then User hovers mouse over "ProfilePhoto"
+And User is on "DeletePhoto"
+
+@testcase7
 Scenario: 7 - Edit Settings
 Given User is on "HomePage"
 When User click on Button "UserNavMenu"
@@ -94,5 +95,21 @@ And User click on Button "Open Test Reminder"
 Then Does Window Header Match "  Sample Event."
 
 
+@testcase8
+Scenario: 8 - Developer Console
+Given User is on "HomePage"
+When User click on Button "UserNavMenu"
+And User click on Button "Developer Console"
+Then Does Window Title Match "Developer Console"
 
+When User closes Window "Developer Console"
+Then "Developer Console" Window is Closed  
+
+@testcase9
+Scenario: 9 - Logout
+Given User is on "HomePage"
+When User click on Button "UserNavMenu"
+And User click on Button "Logout"
+Then User is on "LoginPage"
+And Does Window Title Match "Login | Salesforce"
 

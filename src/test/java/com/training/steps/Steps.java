@@ -140,6 +140,24 @@ public class Steps extends BaseTest {
 	public void does_window_header_match(String headerText) {
 		Assert.assertEquals(page.matchWindowHeader(driver), headerText);
 	}
+	
+	@Then("Does Window Title Match {string}")
+	public void does_window_title_match(String windowTitle) {
+	    Assert.assertEquals(page.getWindowTitle(driver), windowTitle);
+	}
+	@When("User closes Window {string}")
+	public void user_closes_window(String windowName) {
+	    page.closeWindow(windowName, driver);
+	}
+	@Then("{string} Window is Closed")
+	public void window_is_closed(String windowName) {
+	    Assert.assertTrue(page.isWindowClosed(windowName, driver));
+	}
+	
+	@When("User clicks OK on Alert")
+	public void user_clicks_ok_on_alert() {
+	    page.acceptAlert(driver);
+	}
 
 	@After
 	public void teardown(Scenario scenario) {

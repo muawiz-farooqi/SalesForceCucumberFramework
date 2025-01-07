@@ -215,4 +215,63 @@ public class BasePage {
 		return headerText;
 	}
 
+	public Object getWindowTitle(WebDriver driver) {
+		this.driver = driver;
+		String parentHandle = driver.getWindowHandle();
+			
+		waitForSeconds(1);
+		
+		for (String handle : driver.getWindowHandles())
+		{
+			driver.switchTo().window(handle);
+		}
+		
+		String windowTitle = driver.getTitle();
+		driver.switchTo().window(parentHandle);
+		
+		return windowTitle;
+	}
+
+	public void closeWindow(String windowName, WebDriver driver) {
+		this.driver = driver;
+		String parentHandle = driver.getWindowHandle();
+
+		waitForSeconds(1);
+		
+		for (String handle : driver.getWindowHandles())
+		{
+			driver.switchTo().window(handle);
+			
+			if (driver.getTitle().equalsIgnoreCase(windowName)) {
+				break;
+			}
+		}
+		
+		driver.close();
+		driver.switchTo().window(parentHandle);
+	}
+
+	public boolean isWindowClosed(String windowName, WebDriver driver) {
+		waitForSeconds(1);
+		this.driver = driver;
+		String parentHandle = driver.getWindowHandle();
+
+		for (String handle : driver.getWindowHandles())
+		{
+			driver.switchTo().window(handle);
+			
+			if (driver.getTitle().equalsIgnoreCase(windowName)) {
+				return false;
+			}
+		}
+		
+		driver.switchTo().window(parentHandle);
+		return true;
+	}
+
+	public void acceptAlert(WebDriver driver) {
+		this.driver = driver;
+		driver.switchTo().alert().accept();
+	}
+
 }

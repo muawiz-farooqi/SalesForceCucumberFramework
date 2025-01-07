@@ -13,16 +13,17 @@ public class HomePage extends BasePage
 		addObject("HomePage", By.xpath("//h2[normalize-space()='Getting Started']"));
 		
 		addObject("HomeTab", By.xpath("//a[@title='Home Tab']"));
-		addObject("LeadsTab", By.xpath("//a[@title='Leads Tab']"));
 		addObject("AccountsTab", By.xpath("//a[@title='Accounts Tab']"));
-		addObject("ContactsTab", By.xpath("//a[@title='Contacts Tab']"));
 		addObject("OpportunitiesTab", By.xpath("//a[@title='Opportunities Tab']"));
+		addObject("LeadsTab", By.xpath("//a[@title='Leads Tab']"));
+		addObject("ContactsTab", By.xpath("//a[@title='Contacts Tab']"));
 		addObject("AllTabs", By.xpath("//img[@title='All Tabs']"));
 		
 		addObject("UserNavMenu", By.id("userNavLabel"));
 		addObject("UserNavDropDownList", By.xpath("(//div[@id='userNav-menuItems']/a)[1]"));
 		addObject("My Profile", By.xpath("//a[normalize-space()='My Profile']"));
 		addObject("My Settings", By.xpath("//a[normalize-space()='My Settings']"));
+		addObject("Developer Console", By.xpath("//a[normalize-space()='Developer Console']"));
 		addObject("Logout", By.xpath("//a[normalize-space()='Logout']"));
 	}
 }

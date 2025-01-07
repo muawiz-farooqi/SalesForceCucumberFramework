@@ -10,7 +10,8 @@ import io.cucumber.junit.CucumberOptions;
 				 glue = {"com.training.steps"},
 				 plugin = {"pretty",
 				           "html:target/cucumber-reports/cucumber.html",
-				           "json:target/cucumber-reports/cucumber.json"})
+				           "json:target/cucumber-reports/cucumber.json"},
+                 tags = "@testcase29")
 
 public class Runner {
 
