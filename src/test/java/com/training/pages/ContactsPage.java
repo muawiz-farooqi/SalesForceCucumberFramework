@@ -31,7 +31,9 @@ public class ContactsPage extends BasePage {
 		addObject("ContactsDropdown", By.id("fcf"));
 		
 		addObject("ViewErrorMessage", By.xpath("//div[@class='requiredInput']//div[@class='errorMsg']"));
+		
 		addObject("Cancel", By.name("cancel"));
+		
 		addObject("AccountName", By.id("con4"));
 		addObject("SaveAndNew", By.name("save_new"));
 		

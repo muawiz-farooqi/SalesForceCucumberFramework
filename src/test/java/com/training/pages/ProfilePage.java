@@ -44,6 +44,7 @@ public class ProfilePage extends BasePage
 		addObject("SaveProfilePic", By.id("j_id0:j_id7:save"));
 		addObject("DeletePhoto", By.id("deletePhoto"));
 		
+		addObject("AboutTabSelected", By.xpath("//ul[@class='zen-tabControl']/li[@class='zen-current']/a"));
 	}
 }
 

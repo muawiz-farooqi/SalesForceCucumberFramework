@@ -158,6 +158,72 @@ public class Steps extends BaseTest {
 	public void user_clicks_ok_on_alert() {
 	    page.acceptAlert(driver);
 	}
+	
+	@Given("User clicks on Contact named {string}")
+	public void user_clicks_on_contact_named(String contactName) {
+	    page.clickContact(driver, contactName);
+	}
+	
+	@Then("Is User Menu Name Updated {string}")
+	public void is_user_menu_name_updated(String name) {
+	    Assert.assertTrue(page.checkMenuName(name));
+	}
+	
+	@Then("Is Tab Removed {string}")
+	public void is_tab_removed(String tabName) {
+	    Assert.assertTrue(page.isTabRemoved(tabName));
+	}
+	
+	@Then("Is {string} Removed From Bar")
+	public void is_removed_from_bar(String tabName) {
+		Assert.assertTrue(page.isTabRemovedFromBar(tabName, driver));
+	}
+	
+	@When("User click on Time {string}")
+	public void user_click_on_time(String time) {
+	    page.clickCalendarTime(time, driver);
+	}
+	@Then("{int} Windows will be Open")
+	public void windows_will_be_open(Integer numWindows) {
+	    page.waitForWindows(numWindows);
+	}
+	@When("User clicks Button {string} in New Window")
+	public void user_clicks_button_in_new_window(String buttonName) {
+	    page.clickButtonInNewWindow(buttonName);
+	}
+	@Then("{string} contains {string} option")
+	public void contains_option(String elementName, String option) {
+		Assert.assertTrue(page.elementContainsOption(elementName, option));
+	}
+	@When("User picks end time {string}")
+	public void user_picks_end_time(String time) {
+	    page.pickEndTime(driver, time);
+	}
+	@Then("Does {string} match {string}")
+	public void does_end_time_match(String elementName, String time) {
+	    Assert.assertTrue(page.endtimeMatch(elementName, time));
+	}
+	@Then("{string} event displayed with {string} : {string} and {string} : {string}")
+	public void event_displayed_with_and(String option, String startElementName, String startTime, String endElementName, String endTime) {
+	    Assert.assertTrue(page.eventDisplayed(option, startElementName, startTime, endElementName, endTime));
+	}
+	
+	@Then("{string} box is {string}")
+	public void box_is(String elementName, String status) {
+		Assert.assertTrue(page.isBoxSelected(elementName, status));
+	}
+	@When("User select on date with {int} week interval")
+	public void user_select_on_date_with_week_interval(Integer interval) {
+	    page.selectDateWeekInterval(interval, driver);
+	}
+	@Then("{string} is selected")
+	public void is_selected(String elementName) {
+		Assert.assertTrue(page.isElementSet(elementName));
+	}
+	@Then("{int} Week {string} event displayed with {string} : {string} and {string} : {string}")
+	public void week_event_displayed_with_and(Integer interval, String option, String startElementName, String startTime, String endElementName, String endTime) {
+	    Assert.assertTrue(page.recurringEventDisplayed(driver, interval, option, startElementName, startTime, endElementName, endTime));
+	}
 
 	@After
 	public void teardown(Scenario scenario) {

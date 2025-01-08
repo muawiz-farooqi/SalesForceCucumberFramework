@@ -46,4 +46,32 @@ Scenario: 29 - Click Contact
 Given User clicks on Contact named "Farooqi"
 Then Does Element Text Match "ContactDisplayPage" "Farooqi"
 
+@testcase30
+Scenario: 30 - Create New View Error
+Given User click on Button "CreateNewView"
+Then Is User on "CreateNewViewPage"
 
+When User enter into textbox "UniqueViewName" "EFGH"
+And User click on Button "Save"
+Then Does Element Text Match "ViewErrorMessage" "Error: You must enter a value"
+
+@testcase31
+Scenario: 31 - Create New View Cancel
+Given User click on Button "CreateNewView"
+Then Is User on "CreateNewViewPage"
+
+When User enter into textbox "ViewName" "ABCD"
+And User click on Button "UniqueViewName"
+And User clears textbox "UniqueViewName" 
+When User enter into textbox "UniqueViewName" "EFGH"
+And User click on Button "Cancel"
+Then Does Element Text Match "PageHeading" "Contacts" 
+
+@testcase32
+Scenario: 32 - Create New Contact - Save and New
+Given User click on Button "New"
+Then Is User on "NewContactPage"
+
+When User enter into textbox "LastName" "Indian"
+And User click on Button "SaveAndNew"
+Then Is User on "NewContactPage"

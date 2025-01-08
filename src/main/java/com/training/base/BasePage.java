@@ -2,9 +2,11 @@ package com.training.base;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -44,6 +46,11 @@ public class BasePage {
 	public void waitForWindows(int windows) {
 		WebDriverWait wait = new WebDriverWait(driver, 7);
         wait.until(ExpectedConditions.numberOfWindowsToBe(windows));
+	}
+	
+	public void waitForInvisibility(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, 7);
+        wait.until(ExpectedConditions.invisibilityOf(element));
 	}
 
 	public void enterIntoTextbox(String elementName, String value) {
@@ -274,4 +281,158 @@ public class BasePage {
 		driver.switchTo().alert().accept();
 	}
 
+	public void clickContact(WebDriver driver, String contactName) {
+		this.driver = driver;
+		WebElement contactNameLink = driver.findElement(By.xpath("//span[contains(text(),'" + contactName + "')]/parent::a"));
+        contactNameLink.click();
+	}
+
+//	public void isFrameClosed(String frameName) {
+//		WebElement frame = getElement(frameName);
+//		waitForInvisibility(frame);
+//	}
+
+	public boolean checkMenuName(String lastName) {
+		try {
+			driver.findElement(By.xpath("//div[contains(@title," + lastName + ")]"));
+			return true;
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+	}
+
+	public boolean isTabRemoved(String tabName) {
+		try {
+			WebElement tabElement = driver.findElement(By.xpath("//option[text()='" + tabName + "']"));
+			waitForElement(tabElement);
+			tabElement.click();
+			return true;
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+	}
+
+	public boolean isTabRemovedFromBar(String tabName, WebDriver driver) {
+		try {
+			this.driver = driver;
+			WebElement tab = driver.findElement(By.xpath("//ul[@id='tabBar']/li/a[text()='" + tabName + "']"));
+			waitForElement(tab);
+			return false;
+		} catch (Exception e) {
+			return true;
+		}
+	}
+
+	public void clickCalendarTime(String time, WebDriver driver) {
+		this.driver = driver;
+		WebElement timeElement = driver.findElement(By.xpath("//a[contains(text(), '" + time + "')]"));
+		waitForElement(timeElement);
+		timeElement.click();
+	}
+
+	public void clickButtonInNewWindow(String option) {
+		String parentHandle = driver.getWindowHandle();
+		
+		waitForWindows(2);
+		
+		for (String handle : driver.getWindowHandles())
+		{
+			if (handle.equals(parentHandle)) continue;
+			driver.switchTo().window(handle);
+		}
+		
+		driver.findElement(By.xpath("//a[text()='" + option + "']")).click();
+		driver.switchTo().window(parentHandle);
+	}
+
+	public boolean elementContainsOption(String elementName, String option) {
+		try {
+			WebElement subjectTextbox = getElement(elementName);
+			return subjectTextbox.getAttribute("value").equalsIgnoreCase(option) ? true : false;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public void pickEndTime(WebDriver driver, String time) {
+		this.driver = driver;
+		WebElement timeElement = driver.findElement(By.xpath("//div[@id='simpleTimePicker']/div[text()='" + time + "']"));
+		waitForElement(timeElement);
+		timeElement.click();
+	}
+
+	public boolean endtimeMatch(String elementName, String time) {
+		try {
+			WebElement endTimeField = getElement(elementName);
+			return endTimeField.getAttribute("value").equalsIgnoreCase(time) ? true : false;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public boolean eventDisplayed(String eventName, String startElementName, String startTime, String endElementName,
+			String endTime) {
+		try {
+			WebElement startTimeEventBox = getElement(startElementName);
+			WebElement endTimeEventBox = getElement(endElementName);
+			WebElement eventBox = driver.findElement(By.xpath(
+					"//div[@class='multiLineEventBlock dragContentPointer']/span/a/span[text()='" + eventName + "']"));
+
+			Actions action = new Actions(driver);
+			action.moveToElement(eventBox).build().perform();
+
+			return (startTimeEventBox.getText().contains(startTime) && endTimeEventBox.getText().contains(endTime))
+					? true
+					: false;
+
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public boolean isBoxSelected(String elementName, String status) {
+		try {
+			WebElement box = getElement(elementName);
+			return !(status.equalsIgnoreCase("checked") ^ box.isSelected());
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public void selectDateWeekInterval(Integer i, WebDriver driver2) {
+		WebElement todayDate = getElement("TodayDate");
+		int endDate = Integer.parseInt(todayDate.getText()) + (i * 7);
+
+		if (endDate > 30) {
+			WebElement nextMonthButton = getElement("NextMonth");
+			nextMonthButton.click();
+			endDate -= 31;
+		}
+		WebElement endDateElement = driver.findElement(By.xpath("//td[text()='" + endDate + "']"));
+		waitForElement(endDateElement);
+		endDateElement.click();
+	}
+
+	public boolean isElementSet(String elementName) {
+		try {
+			WebElement recurrenceEndDate = getElement(elementName);
+			waitForElement(recurrenceEndDate);
+			return !recurrenceEndDate.getAttribute("value").equals("");
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public boolean recurringEventDisplayed(WebDriver driver, Integer weeks, String option, String startElementName, String startTime,
+			String endElementName, String endTime) {
+		try {
+			this.driver = driver;
+			List<WebElement> recurringEvents = driver
+					.findElements(By.xpath("//span[text()='" + startTime + " - " + endTime + "']"));
+			return recurringEvents.size() >= weeks;
+
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
 }

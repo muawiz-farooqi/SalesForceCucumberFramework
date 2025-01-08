@@ -11,6 +11,8 @@ public class HomePage extends BasePage
 		super(driver);
 
 		addObject("HomePage", By.xpath("//h2[normalize-space()='Getting Started']"));
+		addObject("AllTabsPage", By.xpath("//h1[normalize-space()='All Tabs']"));
+		addObject("CustomizeTabsPage", By.xpath("//h1[normalize-space()='Customize My Tabs']"));
 		
 		addObject("HomeTab", By.xpath("//a[@title='Home Tab']"));
 		addObject("AccountsTab", By.xpath("//a[@title='Accounts Tab']"));
@@ -25,5 +27,15 @@ public class HomePage extends BasePage
 		addObject("My Settings", By.xpath("//a[normalize-space()='My Settings']"));
 		addObject("Developer Console", By.xpath("//a[normalize-space()='Developer Console']"));
 		addObject("Logout", By.xpath("//a[normalize-space()='Logout']"));
+		
+		addObject("onHomePage", By.xpath("//li[contains(@class,'zen-active') and @id='home_Tab']"));
+		addObject("Name", By.xpath("//h1[@class='currentStatusUserName']/a"));
+		
+		addObject("CustomizeTabs", By.xpath("//input[@title='Customize My Tabs']"));
+		addObject("Forecasts", By.xpath("//option[text()='Forecasts']"));
+		addObject("Remove", By.id("duel_select_0_left"));
+		addObject("Save", By.name("save"));
+		
+		addObject("CurrentDate", By.xpath("//span[@class='pageDescription']/a"));
 	}
 }
